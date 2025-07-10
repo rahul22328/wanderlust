@@ -1,0 +1,214 @@
+<% layout("/layouts/boilerplate") %>
+<%= success %>
+<style>
+ /* ───────────────────────────────────────────────
+   CATEGORY SCROLLER
+   Keeps all category “pills” in a single row and
+   lets the strip scroll horizontally on overflow.
+   ─────────────────────────────────────────────── */
+#filters {
+  display: flex;
+  flex-wrap: nowrap;       /* stay in one line */
+  gap: 1.5rem;             /* uniform spacing */
+  overflow-x: auto;        /* horizontal scroll if needed */
+  padding: 1rem;
+  scroll-behavior: smooth; /* nice scrolling */
+  scrollbar-width: thin;   /* Firefox scrollbar */
+}
+
+/* WebKit scrollbar (Chrome / Edge / Safari) */
+#filters::-webkit-scrollbar {
+  height: 6px;
+}
+#filters::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 20px;
+}
+
+/* ───────────────────────────────────────────────
+   INDIVIDUAL FILTER “PILL”
+   A circular icon badge with label underneath.
+   ─────────────────────────────────────────────── */
+.filter {
+  --size: 4.2rem;          /* icon circle size */
+  flex: 0 0 auto;          /* fixed width, don’t shrink */
+  text-align: center;
+  opacity: 0.8;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.filter:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+  cursor: pointer;
+}
+
+/* make the whole pill clickable */
+.filter a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;          /* inherit text/icon color */
+}
+
+/* icon badge */
+.filter i {
+  font-size: 1.6rem;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  border-radius: 50%;
+  background: #f7f7f7;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+
+/* label text */
+.filter p {
+  margin: .5rem 0 0;
+  font-size: .85rem;
+  font-weight: 500;
+}
+
+/* ───────────────────────────────────────────────
+   TAX TOGGLE
+   Lives in the same row so it scrolls with icons.
+   ─────────────────────────────────────────────── */
+.tax-toggle {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  font-size: .9rem;
+  gap: .5rem;
+}
+.tax-toggle label {
+  user-select: none;
+}
+
+/* ───────────────────────────────────────────────
+   TAX INFO CONTENT
+   Hidden by default; reveal via JS toggle.
+   ─────────────────────────────────────────────── */
+
+.tax-toggle{
+  border:1px solid black;
+  border-radius: 1rem;
+  height: 3.5em;
+  padding: 1rem;
+  margin: 2rem;
+  margin-top: auto;
+  text-align: center;
+
+}
+</style>
+
+<!-- Filter Buttons -->
+<div id="filters">
+
+  <div class="filter">
+    <a href="/listings?category=trending">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=rooms">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=iconic-cities">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Iconic Cities</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=mountains">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountains</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=castles">
+      <div><i class="fa-solid fa-chess-rook"></i></div>
+      <p>Castles</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=arctic-pools">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Arctic Pools</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=camping">
+      <div><i class="fa-solid fa-tent"></i></div>
+      <p>Camping</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=farms">
+      <div><i class="fa-solid fa-wheat-awn"></i></div>
+      <p>Farms</p>
+    </a>
+  </div>
+
+  <div class="filter">
+    <a href="/listings?category=snows">
+      <div><i class="fa-solid fa-person-snowboarding"></i></div>
+      <p>Snows</p>
+    </a>
+  </div>
+
+
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+      <label class="form-check-label" for="switchCheckDefault"><b>Display total after taxes</b></label>
+    </div>
+  </div>
+
+</div>
+
+
+    <!-- Card Grid Layout -->
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+      <% for (let listing of alllistings) { %>
+        <a href="/listings/<%=listing._id %>" class="listing-links">
+        <div class="card col listing-card" style="width: 20rem">
+            <img src="<%= listing.image?.url %>" class="card-img-top" alt="Listing_image">
+              <div class="card-img-overlay"></div>
+            <div class="card-body">
+              <p class="card-text ">
+               <b><%= listing.title %></b><br>
+              &#8377; <%= listing.price.toLocaleString("en-IN") %> /night 
+              <i class="tax-info">&nbsp;+18% GST </i>
+              </p>
+            </div>
+          </div>
+          </a>
+      <% } %>
+    </div>
+    <script>
+      let taxSwitch=document.getElementById("switchCheckDefault");
+      taxSwitch.addEventListener("click",()=>{
+        console.log("clicked");
+        let taxinfo=document.getElementsByClassName("tax-info");
+        for(info of taxinfo){
+          if (info.style.display === "inline") {
+        info.style.display = "none";
+      } else {
+        info.style.display = "inline";
+      }
+        }
+
+      })
+    </script>
+

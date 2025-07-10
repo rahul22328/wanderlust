@@ -1,0 +1,109 @@
+
+.plus-jakarta-sans-bold600 {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+body{
+    display:flex;
+    flex-direction: column;
+    min-height: 100vh ;
+
+}
+.container{
+    flex: 1;
+
+}
+
+.f-info {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Corrected */
+    background-color: #ebebeb;
+    height: auto; /* Changed from fixed height for responsiveness */
+    padding: 1rem;
+    text-align: center;
+    gap: 1rem; /* Optional: adds spacing between flex items */
+}
+
+.f-info-socials {
+    font-size: 1.5rem;
+}
+
+.f-info-socials i {
+    margin: 0 0.5rem;
+    color: #222222;
+    cursor: pointer;
+}
+
+.f-info-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+.listing-card{
+    border:none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top {
+  width: 100%;          /* Make image fill card width */
+  height: 200px;        /* Set a fixed height you want */
+  object-fit: cover;    /* Crop & scale image to fill the container */
+  border-radius: 1rem;  /* Your existing styling */
+}
+
+.card-body{
+    padding:0 !important;
+}
+
+.card-text p{
+    font-weight: 400;
+}
+
+.listing-links{
+    text-decoration: none;
+}
+.card-img-overlay{
+    opacity:0;
+}
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: white;
+}
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+.edit-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+}
+.show-img{
+    height: 30vh;
+}
+.btns{
+    display: flex;
+}
+
+.show-card{
+    padding-left:0,
+   
+}
+#map { 
+    height:400px;
+    width:70vh;
+ }
